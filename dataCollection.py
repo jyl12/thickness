@@ -4,15 +4,15 @@ import time
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
  
-TRIG = 7
-ECHO = 11
+TRIG = 15
+ECHO = 15
  
 # print ("Distance Measurement In Progress")
  
-GPIO.setup(TRIG,GPIO.OUT)
-GPIO.setup(ECHO,GPIO.IN)
- 
-GPIO.output(TRIG, False)
+# GPIO.setup(TRIG,GPIO.OUT)
+# GPIO.setup(ECHO,GPIO.IN)
+#  
+# GPIO.output(TRIG, False)
 # print ("Waiting For Sensor To Settle")
 history=[]
 
@@ -29,6 +29,7 @@ def measureAverage():
 
     starttime=time.time()
     for i in range(10):
+        GPIO.setup(TRIG,GPIO.OUT)
         GPIO.output(TRIG, False)
         time.sleep(0.1)
         #print("Waiting for sensor to settle...")
@@ -40,13 +41,13 @@ def measureAverage():
         GPIO.output(TRIG, True)
         time.sleep(0.0001)
         GPIO.output(TRIG, False)
-
+        GPIO.setup(ECHO,GPIO.IN)
         #print("Sending...")
         pulse_start=0
         pulse_end=0
         start=time.time()
         pulse_start=start
-        while GPIO.input(ECHO)==0 and pulse_start-start<=0.0005:
+        while GPIO.input(ECHO)==0 and pulse_start-start<=0.00075:
             pulse_start=time.time()
         if round(pulse_start-start,3)>=0.300:
             print(timeout)
@@ -89,11 +90,12 @@ def measureAverage():
 #         return([999,False,999,999]) 
  
 def measure():
+    GPIO.setup(TRIG,GPIO.OUT)
     time.sleep(0.5)
     GPIO.output(TRIG, True)
     time.sleep(0.1)
     GPIO.output(TRIG, False)
-
+    GPIO.setup(ECHO,GPIO.IN)
     while GPIO.input(ECHO)==0:
         pulse_start = time.time()
 

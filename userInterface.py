@@ -23,6 +23,7 @@ THICKNESS = StringVar()
 desiredThickness = 0
 MEASURED = 0
 TARE = 0
+TOLERANCE = 0.5
 job = None
 #=======================================METHODS=======================================
 # def Database():
@@ -59,7 +60,7 @@ def measureThickness():
     measureTare = round(abs(MEASURED - TARE),2)
     lbl_measured.config(text=measureTare)
     job = root.after(200,measureThickness)
-    if round(abs(desiredThickness - measureTare),2) > 0.5:
+    if round(abs(desiredThickness - measureTare),2) > TOLERANCE:
         lbl_result.config(text='Warning.')
     else:
         lbl_result.config(text='Passed.')
