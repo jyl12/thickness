@@ -68,9 +68,9 @@ def measureThickness():
     lbl_measured.config(text=measureTare)
     job = root.after(200,measureThickness)
     if round(abs(desiredThickness - measureTare),2) > desiredTolerance:
-        lbl_result.config(text='Warning.')
+        lbl_result.config(text='Warning.' , fg="red")
     else:
-        lbl_result.config(text='Passed.')
+        lbl_result.config(text='Passed.',fg="green")
 
     
 def tareThickness():
